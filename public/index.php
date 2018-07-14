@@ -5,4 +5,9 @@
  * Date: 14.07.2018
  * Time: 20:14
  */
-echo "Hello World!";
+
+use components\App;
+
+require_once "../autoload.php";
+
+$app = App::getInstance();
