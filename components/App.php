@@ -9,11 +9,18 @@ class App
 
     public $auth = null;
     public $db = null;
+    public $request = null;
 
     public function init() {
-        echo "Hello World!";
         $this->db = new DB();
         $this->db->init();
+
+        $this->request = new RequestHandler();
+        $this->request->init();
+    }
+
+    public static function getAppRootDir() {
+        return $_SERVER["DOCUMENT_ROOT"] . "/../";
     }
 
 

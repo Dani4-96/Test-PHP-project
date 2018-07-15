@@ -6,8 +6,8 @@
  * Time: 20:14
  */
 
-use components\App;
-
 require_once "../autoload.php";
+
+use components\App;
 
 $app = App::getInstance();
