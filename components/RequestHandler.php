@@ -7,7 +7,7 @@ use \Exception;
 
 class RequestHandler
 {
-    protected $controller = "index";
+    protected $controller = "users";
     protected $action = "index";
     protected $controllerNamespace = "controllers";
 

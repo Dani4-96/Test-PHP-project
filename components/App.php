@@ -12,8 +12,7 @@ class App
     public $request = null;
 
     public function init() {
-        $this->db = new DB();
-        $this->db->init();
+        $this->db = DB::getInstance();
 
         $this->request = new RequestHandler();
         $this->request->init();
