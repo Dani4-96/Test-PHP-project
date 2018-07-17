@@ -14,6 +14,8 @@ class App
     public function init() {
         $this->db = DB::getInstance();
 
+        $this->auth = Authorization::getInstance();
+
         $this->request = new RequestHandler();
         $this->request->init();
     }

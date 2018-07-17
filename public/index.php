@@ -6,6 +6,8 @@
  * Time: 20:14
  */
 
+session_start();
+
 require_once "../autoload.php";
 
 use components\App;

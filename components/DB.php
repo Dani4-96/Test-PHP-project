@@ -3,6 +3,8 @@
 namespace components;
 
 
+use components\traits\SingletonTrait;
+
 class DB
 {
     private $pdo = null;
@@ -16,7 +18,7 @@ class DB
         \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION // errors throw exceptions by default
     ];
 
-    use \components\traits\SingletonTrait;
+    use SingletonTrait;
 
     public function getPDO() {
 

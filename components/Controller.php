@@ -25,4 +25,10 @@ class Controller
 
         return $this->renderer->render($layout, ["content" => $content]);
     }
+
+    public function redirect($url) {
+        header("Location:" . $url);
+
+        exit();
+    }
 }

@@ -48,6 +48,8 @@ class RequestHandler
             } else {
                 throw new Exception("Method does not exists!");
             }
+        } else {
+            throw new Exception("Class does not exists!");
         }
 
     }
