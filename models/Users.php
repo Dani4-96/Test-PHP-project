@@ -14,16 +14,26 @@ class Users extends Model
         "pass" => "varchar"
     ];
 
-    public function getUsers() {
-        $result = $this->select();
+    public function getUsers($order_by) {
+        $result = $this->select([
+            "where" => "login != 'admin'",
+            "order_by" => "{$order_by}"
+        ]);
 
         return $result;
     }
 
-    public function getUserByLogin($login) {
-        $result = $this->select([
-            "where" => "login = '{$login}'"
-        ]);
+    public function getUserByLogin($login, $withoutAdmin = true) {
+
+        if ($withoutAdmin) {
+            $result = $this->select([
+                "where" => "login = '{$login}' AND login != 'admin'"
+            ]);
+        } else {
+            $result = $this->select([
+                "where" => "login = '{$login}'"
+            ]);
+        }
 
         //var_dump($result);
         if (!empty($result)) {
@@ -31,6 +41,14 @@ class Users extends Model
         } else {
             return null;
         }
+
+    }
+
+    public function deleteUserByLogin($login) {
+        $result = $this->delete([
+            "where" => "login = '{$login}' AND login != 'admin'"
+        ]);
+        return $result;
 
     }
 }

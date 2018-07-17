@@ -46,7 +46,7 @@ class Authorization
         $userModel = new Users();
 
         if(!empty($_SESSION["user"]["login"])) {
-            $this->user = $userModel->getUserByLogin($_SESSION["user"]["login"]);
+            $this->user = $userModel->getUserByLogin($_SESSION["user"]["login"],false);
         }
     }
 }

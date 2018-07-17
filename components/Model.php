@@ -17,13 +17,27 @@ class Model
     public function select($closure = []) {
         $query = "SELECT * FROM " . $this->table;
 
-        if(!empty($closure["where"])) {
+        if (!empty($closure["where"])) {
             $query .= " WHERE " . $closure["where"];
+        }
+
+        if (!empty($closure["order_by"])) {
+            $query .= " ORDER BY " . $closure["order_by"];
         }
 
         $statement = $this->pdo->prepare($query);
         $statement->execute();
 
         return $statement->fetchAll();
+    }
+
+    public function delete($closure = []) {
+
+        $query = "DELETE FROM " . $this->table . " WHERE " . $closure["where"];
+
+        $statement = $this->pdo->prepare($query);
+
+        return $statement->execute();
+
     }
 }

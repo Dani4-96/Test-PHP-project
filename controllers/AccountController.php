@@ -13,7 +13,7 @@ class AccountController extends Controller
         if (!empty($request->postParams)) {
             $modelUser = new Users();
 
-            $user = $modelUser->getUserByLogin($request->postParams["login"]);
+            $user = $modelUser->getUserByLogin($request->postParams["login"], false);
 
             if (!empty($user) && $user["password"] === md5($request->postParams["password"])) {
                 $_SESSION["user"] = $user;

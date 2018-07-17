@@ -67,7 +67,7 @@
 <?php else:
     echo \components\Authorization::getLogin();
 ?>
-    <a href="account/logout">Log out</a>
+    <a href="/account/logout">Log out</a>
 <?php endif; ?>
 
 <div>
