@@ -11,13 +11,14 @@ class Users extends Model
 
     public $fields = [
         "login" => "varchar",
-        "pass" => "varchar"
+        "password" => "varchar"
     ];
 
-    public function getUsers($order_by) {
+    public function getUsers($order_by, $limit) {
         $result = $this->select([
             "where" => "login != 'admin'",
-            "order_by" => "{$order_by}"
+            "order_by" => "{$order_by}",
+            "limit" => "{$limit}"
         ]);
 
         return $result;
@@ -48,7 +49,23 @@ class Users extends Model
         $result = $this->delete([
             "where" => "login = '{$login}' AND login != 'admin'"
         ]);
-        return $result;
 
+        return $result;
+    }
+
+    public function updateUsersByLogin($login, $values) {
+        $result = $this->update([
+            "where" => "login = '{$login}' AND login != 'admin'"
+        ], $values);
+
+        return $result;
+    }
+
+    public function countUsers() {
+        $result = $this->count([
+            "where" => "login != 'admin'"
+        ]);
+
+        return $result;
     }
 }

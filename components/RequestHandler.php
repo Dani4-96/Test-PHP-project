@@ -7,7 +7,7 @@ use \Exception;
 
 class RequestHandler
 {
-    protected $controller = "users";
+    protected $controller = "index";
     protected $action = "index";
     protected $controllerNamespace = "controllers";
 
@@ -36,11 +36,17 @@ class RequestHandler
             $this->controller = $path[0];
         }
 
+        //var_dump($this->controller);
+        if (($this->controller == "users" && !Authorization::isAdmin())) {
+            throw new Exception("Forbidden!");
+        }
+
         $classController = $this->controllerNamespace . "\\" . ucfirst($this->controller) . "Controller";
 
         $action = "action" . ucfirst($this->action);
 
         if (class_exists($classController)) {
+
             $instanceController = new $classController();
 
             if (method_exists($instanceController, $action)) {
