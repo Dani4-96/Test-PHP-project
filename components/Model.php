@@ -46,6 +46,11 @@ class Model
     }
 
     public function insert($values = []) {
+        if(!$this->validate($values, $this->fields)) {
+            echo "cunt";
+            return false;
+        }
+
         $query = "INSERT INTO " . $this->table . " (";
         $query .= implode(", ", array_keys($this->fields)) . ") VALUES (:";
         $query .= implode(", :", array_keys($this->fields)) . ")";
@@ -56,6 +61,10 @@ class Model
     }
 
     public function update($closure, $values) {
+        if (!$this->validate($values, $this->fields)) {
+            return false;
+        }
+
         $query = "UPDATE " . $this->table . " SET ";
 
         $fields = [];
@@ -85,5 +94,44 @@ class Model
         $result = $statement->fetch();
 
         return $result["count"];
+    }
+
+    public function validate($values, $rules) {
+        foreach ($rules as $key => $rule) {
+            if (!isset($values[$key])) {
+                continue;
+            }
+
+            $regExpLogin = "/^[a-zA-Z0-9_@]+$/";
+            $regExpNames = "/^[a-zA-Z]+$/";
+
+            switch ($rule) {
+                case "login":
+
+                    if(!filter_var(
+                            $values[$key],
+                            FILTER_VALIDATE_REGEXP,
+                            array("options" => array("regexp" => $regExpLogin)
+                        ))) {
+                            throw new BaseException("Login can contain only latin letters, numbers or symbols _ and @");
+                        }
+
+                break;
+
+                case "names":
+
+                    if(!filter_var(
+                        $values[$key],
+                        FILTER_VALIDATE_REGEXP,
+                        array("options" => array("regexp" => $regExpNames)
+                        ))) {
+                        throw new BaseException("Names can contain only latin letters");
+                    }
+
+                break;
+            }
+        }
+
+        return true;
     }
 }

@@ -3,8 +3,6 @@
 namespace components;
 
 
-use \Exception;
-
 class RequestHandler
 {
     protected $controller = "index";
@@ -38,7 +36,7 @@ class RequestHandler
 
         //var_dump($this->controller);
         if (($this->controller == "users" && !Authorization::isAdmin())) {
-            throw new Exception("Forbidden!");
+            throw new BaseException("Forbidden!");
         }
 
         $classController = $this->controllerNamespace . "\\" . ucfirst($this->controller) . "Controller";
@@ -52,10 +50,10 @@ class RequestHandler
             if (method_exists($instanceController, $action)) {
                 call_user_func_array([$instanceController, $action], [$this]);
             } else {
-                throw new Exception("Method does not exists!");
+                throw new BaseException("Method does not exists!");
             }
         } else {
-            throw new Exception("Class does not exists!");
+            throw new BaseException("Class does not exists!");
         }
 
     }

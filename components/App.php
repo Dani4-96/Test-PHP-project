@@ -3,6 +3,8 @@
 namespace components;
 
 
+use Exception;
+
 class App
 {
     use \components\traits\SingletonTrait;
@@ -17,7 +19,11 @@ class App
         $this->auth = Authorization::getInstance();
 
         $this->request = new RequestHandler();
-        $this->request->init();
+        try {
+            $this->request->init();
+        } catch (Exception $e) {
+            echo "Exception: ", $e->getMessage();
+        }
     }
 
     public static function getAppRootDir() {

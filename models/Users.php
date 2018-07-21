@@ -10,15 +10,19 @@ class Users extends Model
     public $table = "users";
 
     public $fields = [
-        "login" => "varchar",
-        "password" => "varchar"
+        "login"       => "login",
+        "password"    => "password",
+        "first_name"   => "names",
+        "second_name"  => "names",
+        "sex"         => "sex",
+        "date_of_birth" => "date"
     ];
 
     public function getUsers($order_by, $limit) {
         $result = $this->select([
-            "where" => "login != 'admin'",
+            "where"    => "login != 'admin'",
             "order_by" => "{$order_by}",
-            "limit" => "{$limit}"
+            "limit"    => "{$limit}"
         ]);
 
         return $result;

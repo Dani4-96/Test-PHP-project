@@ -2,9 +2,9 @@
 
 namespace controllers;
 
+use components\BaseException;
 use components\Controller;
 use components\RequestHandler;
-use Exception;
 use models\Users;
 
 class UsersController extends Controller
@@ -12,11 +12,13 @@ class UsersController extends Controller
     public function actionIndex(RequestHandler $request) {
         $usersModel = new Users();
 
+        define("COUNTS_PER_PAGE", 5);
+        define("OFFSET", 3);
+
         $currentPage = 1;
-        $countsPerPage = 1;
         $orderBy = "login ASC";
 
-        if (!empty($request->getParams["page"])) {
+        if (isset($request->getParams["page"])) {
             $currentPage = $request->getParams["page"];
             //var_dump($request->getParams["page"]);
             $_SESSION["page"] = $request->getParams["page"];
@@ -26,21 +28,24 @@ class UsersController extends Controller
             $_SESSION["order_by"] = $request->postParams["order_by"];
         }
 
-        if (!empty($_SESSION["order_by"])) {
-            $orderBy = $_SESSION["order_by"];
-        }
-
         if (!empty($_SESSION["page"])) {
             $currentPage = $_SESSION["page"];
         }
 
-        $firstNote = $currentPage * $countsPerPage - $countsPerPage;
-        $limit = "{$firstNote}, {$countsPerPage}";
+        if (!empty($_SESSION["order_by"])) {
+            $orderBy = $_SESSION["order_by"];
+        }
 
         $count = $usersModel->countUsers();
-        $pages = ceil($count / $countsPerPage);
+        $pages = ceil($count / COUNTS_PER_PAGE);
+        
+        if ($currentPage > $pages || $currentPage <= 0) {
+            $currentPage = $pages;
+        }
 
-        if ($currentPage > $pages) throw new Exception("Page does not exists!");
+        $firstNote = $currentPage * COUNTS_PER_PAGE - COUNTS_PER_PAGE;
+        $countsPerPage = COUNTS_PER_PAGE;
+        $limit = "{$firstNote}, {$countsPerPage}";
 
         var_dump($orderBy);
         var_dump($currentPage);
@@ -50,10 +55,12 @@ class UsersController extends Controller
         echo $this->renderLayout(
             "users/index",
             [
-                "users" => $usersModel->getUsers($orderBy, $limit),
-                "count" => $count,
-                "pages" => $pages,
-                "currentPage" => $currentPage
+                "users"       => $usersModel->getUsers($orderBy, $limit),
+                "count"       => $count,
+                "pages"       => $pages,
+                "currentPage" => $currentPage,
+                "offset"      => OFFSET,
+                "orderBy"     => $orderBy
             ]
         );
     }
@@ -91,6 +98,10 @@ class UsersController extends Controller
         if (!empty($request->postParams)) {
             $usersModel = new Users();
 
+            if ($usersModel->getUserByLogin($request->postParams["login"], false)) {
+                throw new BaseException("User exists!");
+            }
+
             $values = $request->postParams;
             $values["password"] = md5($values["password"]);
 
@@ -114,6 +125,10 @@ class UsersController extends Controller
 
         if (!empty($request->postParams)) {
             $usersModel = new Users();
+
+            if ($usersModel->getUserByLogin($request->postParams["login"], false)) {
+                throw new BaseException("User exists!");
+            }
 
             $values = $request->postParams;
             $values["password"] = md5($values["password"]);
