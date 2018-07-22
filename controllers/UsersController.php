@@ -126,7 +126,7 @@ class UsersController extends Controller
         if (!empty($request->postParams)) {
             $usersModel = new Users();
 
-            if ($usersModel->getUserByLogin($request->postParams["login"], false)) {
+            if ($usersModel->getUserByLogin($request->postParams["login"], false) && $login != $request->postParams["login"]) {
                 throw new BaseException("User exists!");
             }
 
