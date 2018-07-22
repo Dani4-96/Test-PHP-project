@@ -6,6 +6,10 @@ namespace components;
 use components\traits\SingletonTrait;
 use models\Users;
 
+/**
+ * This class verifies user rights.
+ * @package components
+ */
 class Authorization
 {
     use SingletonTrait;

@@ -1,47 +1,33 @@
 <form method="POST" action="/users/add">
-    <div>
+    <div class="form-group">
         <label>Login</label>
-        <div>
-            <input type="text" name="login" placeholder="Enter login">
-        </div>
+        <input class="form-control" type="text" name="login" placeholder="Enter login">
     </div>
-    <div>
+    <div class="form-group">
         <label>Password</label>
-        <div>
-            <input type="password" name="password" placeholder="Enter password">
-        </div>
+        <input class="form-control" type="password" name="password" placeholder="Enter password">
     </div>
-    <div>
+    <div class="form-group">
         <label>First name</label>
-        <div>
-            <input type="text" name="first_name" placeholder="Enter first name">
-        </div>
+            <input class="form-control" type="text" name="first_name" placeholder="Enter first name">
     </div>
-    <div>
+    <div class="form-group">
         <label>Second name</label>
-        <div>
-            <input type="text" name="second_name" placeholder="Enter second name">
-        </div>
+        <input class="form-control" type="text" name="second_name" placeholder="Enter second name">
     </div>
-    <div>
+    <div class="form-group">
         <label>Sex</label>
-        <select name="sex">
+        <select class="custom-select" name="sex">
             <option value="M">M</option>
             <option value="F">F</option>
         </select>
     </div>
-    <div>
+    <div class="form-group">
         <label>Date of birth</label>
-        <div>
-            <input type="date" name="date_of_birth" placeholder="Enter date of birth">
-        </div>
+        <input class="form-control" value="2000-01-01" type="date" name="date_of_birth" placeholder="Enter date of birth">
     </div>
-    <div>
-        <div>
-            <input type="submit" value="Submit">
-        </div>
-        <div>
-            <a href="/users">Back</a>
-        </div>
+    <div class="form-group">
+        <input class="btn btn-primary" type="submit" value="Submit">
+        <a class="btn btn-secondary" href="/users">Back</a>
     </div>
 </form>

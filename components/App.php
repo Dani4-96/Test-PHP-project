@@ -3,8 +3,10 @@
 namespace components;
 
 
-use Exception;
-
+/**
+ * The main class of application.
+ * @package components
+ */
 class App
 {
     use \components\traits\SingletonTrait;
@@ -21,7 +23,7 @@ class App
         $this->request = new RequestHandler();
         try {
             $this->request->init();
-        } catch (Exception $e) {
+        } catch (BaseException $e) {
             echo "Exception: ", $e->getMessage();
         }
     }

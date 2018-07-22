@@ -1,7 +1,9 @@
 <?php if (\components\Authorization::isAdmin()): ?>
-<a href="/users/add">
-    Add
-</a>
+<div class="d-flex bd-highlight mb-3">
+    <a class="btn btn-secondary ml-auto p-2 bd-highlight" href="/users/add">
+        Add user
+    </a>
+</div>
 <div>
     <form method="POST" action="/users/index">
 
@@ -42,90 +44,106 @@
 
         ?>
 
-        <select name="order by">
+        <div class="form-row align-items-center">
+            <div class="col-auto my-1">
+                <select class="custom-select mr-sm-2" name="order by">
 
-            <option value="<?= $orderBy ?>"><?= $orderByParsed ?></option>
+                    <option value="<?= $orderBy ?>"><?= $orderByParsed ?></option>
 
-            <?php for ($j = 0; $j < count($orders); $j++): ?>
-                <option value="<?= $orders[$j] ?>"><?= $ordersParsed[$j] ?></option>
-            <?php endfor; ?>
+                    <?php for ($j = 0; $j < count($orders); $j++): ?>
+                        <option value="<?= $orders[$j] ?>"><?= $ordersParsed[$j] ?></option>
+                    <?php endfor; ?>
 
-        </select>
-        <input type="submit" value="Select">
+                </select>
+            </div>
+            <div class="col-auto my-1">
+                <input class="btn btn-primary" type="submit" value="Select">
+            </div>
+            <div class="col-auto my-1">
+                Sorted by: <?= $orderByParsed ?>
+            </div>
+        </div>
 
-        <div>Sorted by <?= $orderBy ?></div>
     </form>
 </div>
 <div>
-    <table class="container">
+    <table class="table table-striped table-hover">
+        <thead class="thead-dark">
+            <tr class="row">
+                <th class="col">Login</th>
+                <th class="col">First name</th>
+                <th class="col">Second name</th>
+                <th class="col"></th>
+            </tr>
+        </thead>
         <tbody>
             <?php foreach ($users as $user): ?>
                 <tr class="row">
-                    <td class="col-sm">
+                    <td class="col">
                         <a href="/users/view?login=<?= $user["login"] ?>"><?= $user["login"] ?></a>
                     </td>
-                    <td class="col-sm">
+                    <td class="col">
                         <a href="/users/view?login=<?= $user["login"] ?>"><?= $user["first_name"] ?></a>
                     </td>
-                    <td class="col-sm">
+                    <td class="col">
                         <a href="/users/view?login=<?= $user["login"] ?>"><?= $user["second_name"] ?></a>
                     </td>
-                    <td class="">
-                        <a href="/users/view?login=<?= $user["login"] ?>">View</a>
-                    </td>
-                    <td class="">
-                        <a href="/users/edit?login=<?= $user["login"] ?>">Edit</a>
-                    </td>
-                    <td class="">
-                        <a href="/users/delete?login=<?= $user["login"] ?>">Delete</a>
+                    <td class="col">
+                        <a class="btn btn-info" href="/users/view?login=<?= $user["login"] ?>">View</a>
+
+                        <a class="btn btn-warning" href="/users/edit?login=<?= $user["login"] ?>">Edit</a>
+
+                        <a class="btn btn-danger" href="/users/delete?login=<?= $user["login"] ?>">Delete</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
     <div>
-        <?php if ($currentPage > 1): ?>
+        <ul class="pagination justify-content-center">
+            <?php if ($currentPage > 1): ?>
 
-            <a href="/users/index?page=<?= $currentPage - 1 ?>">prev</a>
+                <li class="page-item"><a class="page-link" href="/users/index?page=<?= $currentPage - 1 ?>">prev</a></li>
 
-        <?php endif; ?>
+            <?php endif; ?>
 
-        <?php
-        $pageCounter = 1;
-        $difference = $pages - $currentPage;
+            <?php
+            $pageCounter = 1;
+            $difference = $pages - $currentPage;
 
-        $reverseDifference = $offset - $difference;
-        if ($difference < $offset) $offset += $reverseDifference;
+            $reverseDifference = $offset - $difference;
+            if ($difference < $offset) $offset += $reverseDifference;
 
-        $i = $currentPage - $offset;
-        if ($i < 1) $i = 1;
+            $i = $currentPage - $offset;
+            if ($i < 1) $i = 1;
 
-        while ($i < $currentPage): ?>
+            while ($i < $currentPage): ?>
 
-            <a href="/users/index?page=<?= $i ?>"><?= $i ?></a>
+                <li class="page-item"><a class="page-link" href="/users/index?page=<?= $i ?>"><?= $i ?></a></li>
 
-        <?php $i++; $pageCounter++;
-        endwhile; ?>
+            <?php $i++; $pageCounter++;
+            endwhile; ?>
 
-        <a><?= $currentPage ?></a>
+            <li class="page-item active"><a class="page-link"><?= $currentPage ?></a></li>
 
-        <?php
-        $rightOffset = $offset * 2 + 1 - $pageCounter;
+            <?php
+            $rightOffset = $offset * 2 + 1 - $pageCounter;
 
-        $k = $currentPage + 1;
-        while ($k <= $currentPage + $rightOffset):
-            if ($k > $pages) break; ?>
+            $k = $currentPage + 1;
+            while ($k <= $currentPage + $rightOffset):
+                if ($k > $pages) break; ?>
 
-            <a href="/users/index?page=<?= $k ?>"><?= $k ?></a>
+                <li class="page-item"><a class="page-link" href="/users/index?page=<?= $k ?>"><?= $k ?></a></li>
 
-        <?php $k++;
-        endwhile;
+            <?php $k++;
+            endwhile;
 
-        if ($currentPage != $pages): ?>
+            if ($currentPage != $pages): ?>
 
-            <a href="/users/index?page=<?= $currentPage + 1 ?>">next</a>
+                <li class="page-item"><a class="page-link" href="/users/index?page=<?= $currentPage + 1 ?>">next</a></li>
 
-        <?php endif; ?>
+            <?php endif; ?>
+        </ul>
     </div>
 </div>
 <?php endif; ?>

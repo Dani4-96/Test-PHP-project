@@ -3,7 +3,11 @@
 namespace components;
 
 
-class Controller
+/**
+ * This class and it's children process user requests and connect models and views.
+ * @package components
+ */
+abstract class Controller
 {
     private $defaultLayout = "layout";
     protected $renderer = null;

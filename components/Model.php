@@ -3,7 +3,11 @@
 namespace components;
 
 
-class Model
+/**
+ * This class and it's children contain the main business logic of application.
+ * @package components
+ */
+abstract class Model
 {
     public $pdo = null;
     public $table = "";

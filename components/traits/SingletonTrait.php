@@ -3,6 +3,10 @@
 namespace components\traits;
 
 
+/**
+ * Implementation of extending Singleton design pattern.
+ * @package components\traits
+ */
 trait SingletonTrait
 {
     private static $instance;

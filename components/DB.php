@@ -5,6 +5,10 @@ namespace components;
 
 use components\traits\SingletonTrait;
 
+/**
+ * This class connects to database
+ * @package components
+ */
 class DB
 {
     private $pdo = null;

@@ -12,7 +12,7 @@ class UsersController extends Controller
     public function actionIndex(RequestHandler $request) {
         $usersModel = new Users();
 
-        define("COUNTS_PER_PAGE", 5);
+        define("COUNTS_PER_PAGE", 4);
         define("OFFSET", 3);
 
         $currentPage = 1;
@@ -47,8 +47,8 @@ class UsersController extends Controller
         $countsPerPage = COUNTS_PER_PAGE;
         $limit = "{$firstNote}, {$countsPerPage}";
 
-        var_dump($orderBy);
-        var_dump($currentPage);
+        //var_dump($orderBy);
+        //var_dump($currentPage);
         //var_dump($limit);
         //var_dump($usersModel->getUsers($order_by, $limit));
 

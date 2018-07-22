@@ -3,6 +3,10 @@
 namespace components;
 
 
+/**
+ * Class parses URI and calls appropriate actions of controllers.
+ * @package components
+ */
 class RequestHandler
 {
     protected $controller = "index";
